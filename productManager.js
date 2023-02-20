@@ -5,7 +5,9 @@ class ProductManager{
 
     getProducts = () => {
         return this.products;
+        
     }
+    
 
     addProducts = (title, description, price ,thumbnail, code, stock,
     ) => {
@@ -19,43 +21,41 @@ class ProductManager{
             stock,
         }
 
-        if(this.products.includes ((e)=> e.code === "abc123")){
-            console.log("este objeto ya existe");
+        const indiceProducto = this.products.findIndex((e)=> e.code === code)
+
+        if(indiceProducto === -1){
+            this.products.push(producto)
+        } else {
+            console.log("producto ya ingresado")
             return;
         }
+    
+            
 
-        this.products.push(producto)
-        return;
-
-       
     }
 
     getProductsById = (buscarId) => {
-        const productoEncontrado = this.products.find((producto)=> producto.id === buscarId );
-        
+        const productoEncontrado = this.products.find((e)=> e.id === buscarId );
+
         if(!productoEncontrado){
-            console.log("Not found")
+            console.log("producto no encontrado")
             return;
         }else{
         console.log(productoEncontrado);
-        return;}
+}
     }
 
 }
 
 let producto1 = new ProductManager();
 
-producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25
-    )
-/* producto1.addProducts("sdsd", "aaaaaa prueba", 2200, "fafasfmagen", "3324234", 252
-    ) */
-
-/* console.log(producto1.getProducts())
- */
-producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "ab23aasdas", 25
-    )
-producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "ab23aaasdawe2224235235235sdas", 25
-    )
-    producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25
-    )
 console.log(producto1.getProducts())
+
+producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25)
+
+console.log(producto1.getProducts())
+
+producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25)
+
+producto1.getProductsById(1)
+producto1.getProductsById(3)
