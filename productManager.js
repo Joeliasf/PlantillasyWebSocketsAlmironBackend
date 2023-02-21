@@ -4,7 +4,7 @@ class ProductManager{
     }
 
     getProducts = () => {
-        return this.products;
+        return console.log(this.products);
         
     }
     
@@ -22,10 +22,16 @@ class ProductManager{
         }
 
         const indiceProducto = this.products.findIndex((e)=> e.code === code)
-
-        if(indiceProducto === -1){
+    
+        if(!title || !description || !price || !thumbnail || !code || !stock){
+            console.log("faltan datos en su producto")
+            return;
+        }
+        else if(indiceProducto === -1){
             this.products.push(producto)
+
         } else {
+            
             console.log("producto ya ingresado")
             return;
         }
@@ -49,13 +55,30 @@ class ProductManager{
 
 let producto1 = new ProductManager();
 
-console.log(producto1.getProducts())
+producto1.getProducts()
 
 producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25)
 
-console.log(producto1.getProducts())
+producto1.getProducts()
+
+producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abhgftf5r78888c123", 25)
+
+producto1.getProducts()
 
 producto1.addProducts("producto prueba", "Este es un producto prueba", 200, "sin imagen", "abc123", 25)
+
+producto1.getProducts()
+
+producto1.addProducts( "Este es un producto prueba", 200, "sin imagen", "abc123", 25)
+
+producto1.getProductsById(1)
+
+producto1.getProductsById(5)
+/*
+
+
+
 
 producto1.getProductsById(1)
 producto1.getProductsById(3)
+ */
