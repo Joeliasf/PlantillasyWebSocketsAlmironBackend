@@ -1,6 +1,5 @@
 import ProductManager from "./productManager.js";
 
-const definirProducto = new ProductManager();
 
 const consulta = async () => {
 
@@ -21,7 +20,7 @@ const consulta = async () => {
         
         await producto1.deleteProducts(7) 
         
-        await producto1.deleteProducts(0)
+        await producto1.deleteProducts(1)
         
         }
         

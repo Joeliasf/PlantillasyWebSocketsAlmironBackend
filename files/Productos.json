@@ -1,11 +1,11 @@
 [
 	{
-		"title": "esto es un cambio al producto",
-		"description": "cambiando el producto",
-		"price": 500,
-		"thumbnail": "nueva imagen",
-		"code": "codigonuevo",
-		"stock": 10,
-		"id": 1
+		"title": "producto prueba",
+		"description": "Este es un producto prueba",
+		"price": 200,
+		"thumbnail": "sin imagen",
+		"code": "abc123",
+		"stock": 25,
+		"id": 2
 	}
 ]
