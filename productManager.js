@@ -1,7 +1,7 @@
 import fs from "fs"
 
 
-class ProductManager{
+export default class ProductManager{
     constructor(){
         this.path = "./files/Productos.json";
     }
@@ -40,7 +40,7 @@ class ProductManager{
         const indiceProducto = productosIngresados.findIndex((e)=> e.code === code)
 
         if(!title || !description || !price || !thumbnail || !code || !stock){
-            console.log("faltan datos en su producto")
+            ("faltan datos en su producto")
             return;
         }
         else if(indiceProducto === -1){
@@ -68,7 +68,7 @@ class ProductManager{
            console.log("producto no encontrado")
             return;
         }else{
-            console.log(productoEncontrado)
+            
         return productoEncontrado;
         }
     } 
@@ -77,7 +77,7 @@ class ProductManager{
         const buscarProducto = await this.getProducts();
         for (var i = 0; i < buscarProducto.length; i++)
         if(!buscarId || !title || !description || !price || !thumbnail || !code || !stock){
-            console.log("faltan datos en su producto")
+            ("faltan datos en su producto")
             return;
         }
         else if(buscarProducto[i].id === buscarId) {
@@ -94,6 +94,7 @@ class ProductManager{
             JSON.stringify(buscarProducto, null, "\t")
           );
             } ; 
+            
         deleteProducts = async (buscarId) => {
             const buscarProductos = await this.getProducts();
             const borrarProducto = buscarProductos.findIndex((e) => e.id === buscarId);
@@ -107,40 +108,11 @@ class ProductManager{
                 this.path,
                 JSON.stringify(buscarProductos, null, "\t")
             )
-            /*             
-            buscarProductos.push(productosBorrados)
-                await fs.promises.writeFile(
-                this.path,
-                JSON.stringify(buscarProductos, null, "\t")
-              )  */
+
         }
 
 }
 
-let producto1 = new ProductManager();
-
-const listaProductos = async () => {
 
 
-await producto1.getProducts();
 
-await producto1.addProducts("producto prueba","Este es un producto prueba", 200, "sin imagen", "abc123", 25);
-
-await producto1.getProducts();
-
-await producto1.getProductsById(1)
-
-await producto1.getProductsById(5)
-
-await producto1.updateProducts (1, "esto es un cambio al producto", "cambiando el producto");
-
-await producto1.updateProducts (1, "esto es un cambio al producto", "cambiando el producto", 500, "nueva imagen", "codigonuevo", 10);
-
-await producto1.deleteProducts(7) 
-
-await producto1.deleteProducts(0)
-
-}
-
-
-listaProductos()
