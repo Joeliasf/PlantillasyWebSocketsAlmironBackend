@@ -75,7 +75,7 @@ export default class ProductManager{
 
     updateProducts = async (buscarId, title, description, price ,thumbnail, code, stock,) => {
         const buscarProducto = await this.getProducts();
-        for (var i = 0; i < buscarProducto.length; i++)
+        for (var i = 0; i < buscarProducto.length; i++){
         if(!buscarId || !title || !description || !price || !thumbnail || !code || !stock){
             ("faltan datos en su producto")
             return;
@@ -89,12 +89,13 @@ export default class ProductManager{
             buscarProducto[i].stock = stock;
             break;
           }
+        }
           await fs.promises.writeFile(
             this.path,
             JSON.stringify(buscarProducto, null, "\t")
           );
             } ; 
-            
+
         deleteProducts = async (buscarId) => {
             const buscarProductos = await this.getProducts();
             const borrarProducto = buscarProductos.findIndex((e) => e.id === buscarId);
