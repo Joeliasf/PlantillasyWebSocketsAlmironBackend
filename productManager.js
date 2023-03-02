@@ -14,7 +14,6 @@ export default class ProductManager{
                 return [];
             }else{
             const result = JSON.parse(data);
-            console.log(result);
             return result;}
         }
     };
@@ -40,8 +39,7 @@ export default class ProductManager{
         const indiceProducto = productosIngresados.findIndex((e)=> e.code === code)
 
         if(!title || !description || !price || !thumbnail || !code || !stock){
-            ("faltan datos en su producto")
-            return;
+            return("faltan datos en su producto");
         }
         else if(indiceProducto === -1){
             productosIngresados.push(producto)
@@ -51,9 +49,7 @@ export default class ProductManager{
             )
                 return producto;
         } else {
-            
-            console.log("producto ya ingresado")
-            return;
+            return("producto ya ingresado");
         }
     
             
@@ -65,8 +61,7 @@ export default class ProductManager{
         const productoEncontrado = buscarProducto.find((e)=> e.id === buscarId );
 
         if(!productoEncontrado){
-           console.log("producto no encontrado")
-            return;
+            return("producto no encontrado");
         }else{
             
         return productoEncontrado;
@@ -77,8 +72,8 @@ export default class ProductManager{
         const buscarProducto = await this.getProducts();
         for (var i = 0; i < buscarProducto.length; i++){
         if(!buscarId || !title || !description || !price || !thumbnail || !code || !stock){
-            ("faltan datos en su producto")
-            return;
+            
+            return("faltan datos en su producto");
         }
         else if(buscarProducto[i].id === buscarId) {
             buscarProducto[i].title = title;
@@ -101,7 +96,8 @@ export default class ProductManager{
             const borrarProducto = buscarProductos.findIndex((e) => e.id === buscarId);
             
             if(borrarProducto === -1){
-               console.log("el producto solicitado no existe")
+              return("el producto solicitado no existe")
+              ;
             } else {
                 buscarProductos.splice(borrarProducto, 1);
             }
