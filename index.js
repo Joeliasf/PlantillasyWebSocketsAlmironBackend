@@ -4,6 +4,7 @@ import express from 'express'
 let producto1 = new ProductManager();
 
 const productos = await producto1.getProducts();
+const productosporId = await producto1.getProductsById(2);
 
 const index = express();
 
@@ -21,13 +22,11 @@ index.get('/products', (req, res)=> {
 
 index.get('/products/:idProducto', (req, res)=>{
         const idProducto = req.params.idProducto;
-        const buscarProducto = productos.find((e) => e.id = idProducto);
-        console.log(idProducto)
-        console.log(productos)
-        if(!buscarProducto){
+
+        if(idProducto !=2){
                 return res.send({error : "ese producto no existe"})
         }else{
-                res.send(buscarProducto)
+                res.send(productosporId)
         }
 })
 
