@@ -20,7 +20,7 @@ index.get('/products', async (req, res)=> {
 
 index.get('/products/:id', async (req, res)=>{
         const idProducto = req.params.id;
-        const productosporId =  await producto1.getProductsById(idProducto);
+        const productosporId =  await producto1.getProductsById(Number(idProducto));
         console.log(productosporId)
         console.log(idProducto)
 
