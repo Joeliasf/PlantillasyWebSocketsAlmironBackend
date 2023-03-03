@@ -3,14 +3,12 @@ import express from 'express'
 
 let producto1 = new ProductManager();
 
-const productos = await producto1.getProducts();
-const productosporId = await producto1.getProductsById(2);
-
 const index = express();
 
 
 
-index.get('/products', (req, res)=> {
+index.get('/products', async (req, res)=> {
+        const productos = await producto1.getProducts();
         const limit = req.query.limit;   
         let limiteProductos = productos.slice(0, limit);
         if(!limit){
@@ -20,14 +18,14 @@ index.get('/products', (req, res)=> {
 
         })
 
-index.get('/products/:idProducto', (req, res)=>{
-        const idProducto = req.params.idProducto;
+index.get('/products/:id', async (req, res)=>{
+        const idProducto = req.params.id;
+        const productosporId =  await producto1.getProductsById(idProducto);
+        console.log(productosporId)
+        console.log(idProducto)
 
-        if(idProducto !=2){
-                return res.send({error : "ese producto no existe"})
-        }else{
-                res.send(productosporId)
-        }
+        res.send(productosporId)
+
 })
 
 index.listen(8080, () => {
