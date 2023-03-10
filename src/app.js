@@ -3,11 +3,11 @@ import express from 'express'
 
 let producto1 = new ProductManager();
 
-const index = express();
+const app = express();
 
 
 
-index.get('/products', async (req, res)=> {
+app.get('/products', async (req, res)=> {
         const productos = await producto1.getProducts();
         const limit = req.query.limit;   
         let limiteProductos = productos.slice(0, limit);
@@ -18,7 +18,7 @@ index.get('/products', async (req, res)=> {
 
         })
 
-index.get('/products/:id', async (req, res)=>{
+app.get('/products/:id', async (req, res)=>{
         const idProducto = req.params.id;
         const productosporId =  await producto1.getProductsById(Number(idProducto));
         if (!productosporId) return res.send({ error: "producto no encontrado" });
@@ -27,7 +27,7 @@ index.get('/products/:id', async (req, res)=>{
 
 })
 
-index.listen(8080, () => {
+app.listen(8080, () => {
         console.log("Servidor arriba en el puerto 8080");
       });
       
