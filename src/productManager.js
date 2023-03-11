@@ -1,9 +1,8 @@
-import fs from "fs"
-
+import fs, { stat } from "fs"
 
 export default class ProductManager{
     constructor(){
-        this.path = "../files/Productos.json";
+        this.path = "./files/Productos.json";
     }
 
     getProducts = async () => {
@@ -17,18 +16,20 @@ export default class ProductManager{
             return result;}
         }
     };
-    
 
-    addProducts = async (title, description, price ,thumbnail, code, stock,
+    addProducts = async (title, description, price ,thumbnails, code, stock, category, status
     ) => {
         const productosIngresados = await this.getProducts();
         const producto = {
             title,
             description,
             price,
-            thumbnail,
+            thumbnails,
             code,
             stock,
+            category,
+            status
+
         }
         if (productosIngresados.length === 0){
             producto.id = 1
@@ -38,7 +39,7 @@ export default class ProductManager{
 
         const indiceProducto = productosIngresados.findIndex((e)=> e.code === code)
 
-        if(!title || !description || !price || !thumbnail || !code || !stock){
+        if(!title || !description || !price || !thumbnails || !code || !stock || !category||!status){
             return("faltan datos en su producto");
         }
         else if(indiceProducto === -1){
@@ -68,46 +69,53 @@ export default class ProductManager{
         }
     } 
 
-    updateProducts = async (buscarId, title, description, price ,thumbnail, code, stock,) => {
+    updateProducts = async (buscarId, title, description, price ,thumbnails, code, stock, category, status) => {
         const buscarProducto = await this.getProducts();
         for (var i = 0; i < buscarProducto.length; i++){
-        if(!buscarId || !title || !description || !price || !thumbnail || !code || !stock){
+        if(!buscarId || !title || !description || !price || !thumbnails || !code || !stock || !category || !status){
             
             return("faltan datos en su producto");
         }
         else if(buscarProducto[i].id === buscarId) {
+            if (buscarProducto[i].code === code){
             buscarProducto[i].title = title;
             buscarProducto[i].description = description;
             buscarProducto[i].price = price;
-            buscarProducto[i].thumbnail = thumbnail;
+            buscarProducto[i].thumbnails = thumbnails;
             buscarProducto[i].code = code;
             buscarProducto[i].stock = stock;
+            buscarProducto[i].category = category;
+            buscarProducto[i].status = status;
             break;
+          }else {
+            return "el codigo del producto no coincide"
           }
+        }
         }
           await fs.promises.writeFile(
             this.path,
             JSON.stringify(buscarProducto, null, "\t")
           );
+          return buscarProducto.find(product => product.id === buscarId);
             } ; 
 
         deleteProducts = async (buscarId) => {
+
             const buscarProductos = await this.getProducts();
             const borrarProducto = buscarProductos.findIndex((e) => e.id === buscarId);
-            
-            if(borrarProducto === -1){
-              return("el producto solicitado no existe")
-              ;
+          
+            if (borrarProducto === -1) {
+              return "el producto solicitado no existe";
             } else {
-                buscarProductos.splice(borrarProducto, 1);
+              buscarProductos.splice(borrarProducto, 1);
             }
+          
             await fs.promises.writeFile(
-                this.path,
-                JSON.stringify(buscarProductos, null, "\t")
+              this.path,
+              JSON.stringify(buscarProductos, null, "\t")
             )
-
-        }
-
+            return buscarProductos;
+          }
 }
 
 
