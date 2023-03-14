@@ -7,6 +7,7 @@ export default class CartManager{
         this.path = "./files/Carts.json";
     }
     getCarts = async () => {
+        try{
         if (fs.existsSync(this.path)){
             const data = await fs.promises.readFile (this.path, "utf-8");
             if (data === ""){
@@ -15,9 +16,13 @@ export default class CartManager{
             const result = JSON.parse(data);
             return result;}
         }
+    } catch (error){
+        throw new Error ('error leyendo el archivo')
+    }
     };
 
     getCartsById = async (buscarId) => {
+        try{
         const buscarCarrito = await this.getCarts();
         const carritoEncontrado = buscarCarrito.find((e)=> e.id === buscarId );
 
@@ -27,8 +32,12 @@ export default class CartManager{
             
         return carritoEncontrado;
         }
+    } catch (error){
+        throw new Error ('error leyendo el archivo')
+    }
     } 
     createCart = async () => {
+        try{
         const carts = await this.getCarts();
         const cartIds = carts.map((cart) => cart.id);
         const newCartId = cartIds.length === 0 ? 1 : Math.max(...cartIds) + 1;
@@ -39,9 +48,13 @@ export default class CartManager{
             JSON.stringify(carts, null, "\t")
         )
             return carts;
+        } catch (error){
+            throw new Error ('error leyendo el archivo')
+        }
       };
 
-      updateCart = async (buscarId, id, quantity) => {
+       updateCart = async (buscarId, id, quantity) => {
+        try{
         const buscarCarrito = await this.getCarts();
         const buscarProducto = await productManager.getProducts();
         const cartIndex = buscarCarrito.findIndex((cart) => cart.id === Number(buscarId));
@@ -76,8 +89,11 @@ export default class CartManager{
             await fs.promises.writeFile(this.path, JSON.stringify(buscarCarrito, null, "\t"));
             return buscarCarrito[cartIndex];
         } 
-      };
-
+    } catch (error){
+        throw new Error ('error leyendo el archivo')
+    }
+      }; 
+      
 
     
 }
