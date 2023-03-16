@@ -1,0 +1,12 @@
+<div>
+    <p>Entrega websockets y handlebars</p>
+    <ul id="products-list">
+  {{#each listaProducto}}
+        <li>Title : {{this.title}} - description : {{this.description}} - price : {{this.price}} - thumbnails:{{this.thumbnails}} - code : {{this.code}} - stock : {{this.stock}} - category : {{this.category}} - status : {{this.status}}</li>
+        
+  {{/each}}
+</ul>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+

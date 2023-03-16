@@ -6,7 +6,6 @@ export default class ProductManager{
     }
 
     getProducts = async () => {
-        try{
         if (fs.existsSync(this.path)){
             const data = await fs.promises.readFile (this.path, "utf-8");
             if (data == ""){
@@ -16,14 +15,10 @@ export default class ProductManager{
             const result = JSON.parse(data);
             return result;}
         }
-    } catch (error){
-        throw new Error ('error leyendo el archivo')
-    }
     };
 
     addProducts = async (title, description, price ,thumbnails, code, stock, category, status
     ) => {
-        try{
         const productosIngresados = await this.getProducts();
         const producto = {
             title,
@@ -42,32 +37,25 @@ export default class ProductManager{
             producto.id = productosIngresados[productosIngresados.length -1].id + 1;
         }
 
-        const indiceProducto = productosIngresados.findIndex((e)=> e.code === code)
         if (typeof status !== 'boolean') {
             throw new Error('status tiene que ser un boolean');
           }
-        if(!title || !description || !price || !thumbnails || !code || !stock || !category||!Boolean(status)){
+        else if(!title || !description || !price || !thumbnails || !code || !stock || !category||!Boolean(status)){
             return("faltan datos en su producto");
         }
-        else if(indiceProducto === -1){
+        else{
             productosIngresados.push(producto)
             await fs.promises.writeFile(
                 this.path,
                 JSON.stringify(productosIngresados, null, "\t")
             )
                 return producto;
-        } else {
-            return("producto ya ingresado");
         }
-    } catch (error){
-        console.error(error.message)
-    }
             
 
     }
 
    getProductsById = async (buscarId) => {
-    try{
         const buscarProducto = await this.getProducts();
         const productoEncontrado = buscarProducto.find((e)=> e.id === buscarId );
 
@@ -77,13 +65,9 @@ export default class ProductManager{
             
         return productoEncontrado;
         }
-    } catch (error){
-        throw new Error ('error leyendo el archivo')
-    }
     } 
 
     updateProducts = async (buscarId, title, description, price ,thumbnails, code, stock, category, status) => {
-        try{
         const buscarProducto = await this.getProducts();
         for (var i = 0; i < buscarProducto.length; i++){
         if(!buscarId || !title || !description || !price || !thumbnails || !code || !stock || !category || !status){
@@ -111,13 +95,9 @@ export default class ProductManager{
             JSON.stringify(buscarProducto, null, "\t")
           );
           return buscarProducto.find(product => product.id === buscarId);
-        } catch (error){
-            throw new Error ('error leyendo el archivo')
-        }
             } ; 
 
         deleteProducts = async (buscarId) => {
-            try{
             const buscarProductos = await this.getProducts();
             const borrarProducto = buscarProductos.findIndex((e) => e.id === buscarId);
           
@@ -132,9 +112,6 @@ export default class ProductManager{
               JSON.stringify(buscarProductos, null, "\t")
             )
             return buscarProductos;
-        } catch (error){
-            throw new Error ('error leyendo el archivo')
-        }
           }
 }
 

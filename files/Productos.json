@@ -108,5 +108,27 @@
 		"category": "food",
 		"status": true,
 		"id": 10
+	},
+	{
+		"title": "producto en tiempo real",
+		"description": "este es un producto en tiempo real ",
+		"price": 9.99,
+		"thumbnails": "una imagen en tiempo real ",
+		"code": "345345353",
+		"stock": 130,
+		"category": "tiempo real",
+		"status": true,
+		"id": 11
+	},
+	{
+		"title": "otro producto en tiempo real",
+		"description": "este es un segundo producto en tiempo real ",
+		"price": 9.99,
+		"thumbnails": "una imagen en tiempo real ",
+		"code": "345345353",
+		"stock": 130,
+		"category": "tiempo real",
+		"status": true,
+		"id": 12
 	}
 ]

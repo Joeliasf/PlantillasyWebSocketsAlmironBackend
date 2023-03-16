@@ -1,6 +1,6 @@
 import { Router } from "express";
 import ProductManager from "../productManager.js";
-
+import socketServer from "../app.js";
 const router = Router();
 
 let producto1 = new ProductManager();
@@ -17,7 +17,7 @@ router.get('/', async (req, res)=> {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: 'error de servidor.' });
+        res.status(400).send({ error: 'URL incorrecta' });
         }
     });
 
@@ -30,7 +30,7 @@ router.get('/:pid', async (req, res)=>{
     res.send(productosporId)
     } catch (error) {
         console.error(error);
-        res.status(500).send({error : 'error de servidor'})
+        res.status(400).send({error : 'URL incorrecta'})
     }
 })
 
@@ -38,10 +38,12 @@ router.post("/", async (req, res)=> {
     try {
     const { title, description, price, thumbnails, code, stock, category, status } = req.body
     const agregarProducto = await producto1.addProducts(title, description, price, thumbnails, code, stock, category, status);
+    const productosActualizados = await producto1.getProducts()
+    socketServer.emit('listaProductos', productosActualizados)
     return res.json(agregarProducto);
 } catch (error) {
     console.error(error);
-    res.status(500).send({error : 'error de servidor'})
+    res.status(400).send({error : 'URL incorrecta'})
 }
 })
 
@@ -53,6 +55,8 @@ router.put("/p:id", async (req, res)=> {
     if (!actualizarProductos) {
     return res.status(404).send({error: "Producto no encontrado"});
 }       else{
+    const productosActualizados = await producto1.getProducts()
+    socketServer.emit('listaProductos', productosActualizados)
     return res.json(actualizarProductos)
 }
 } catch (error) {
@@ -60,7 +64,7 @@ router.put("/p:id", async (req, res)=> {
     return res.status(400).send({error : error.message})
 } else{
     console.error(error);
-    return res.status(500).send({error : 'error de servidor'});
+    return res.status(400).send({error : 'URL incorrecta'});
 }   
 }
 })
@@ -69,10 +73,12 @@ router.delete ("/p:id", async (req, res)=> {
     try{
     const { id } = req.params; 
     const result = await producto1.deleteProducts(Number(id));
+    const productosActualizados = await producto1.getProducts()
+    socketServer.emit('listaProductos', productosActualizados)
     res.send(result)
 } catch (error) {
     console.error(error);
-    res.status(500).send({error : 'error de servidor'})
+    res.status(400).send({error : 'URL incorrecta'})
 }
 })
 
